@@ -24,6 +24,7 @@ AMI_BUILD_NAMES ?= ami-default
 GCE_BUILD_NAMES ?= gce-default
 OVA_BUILD_NAMES_ESX ?= esx-ova-centos-7 esx-ova-ubuntu-1804
 AZURE_BUILD_NAMES ?= azure-sig-ubuntu-1804 azure-vhd-ubuntu-1804
+SAKURACLOUD_BUILD_NAMES ?= sakuracloud-default
 
 # The version of Kubernetes to install.
 KUBE_JSON ?= packer/config/kubernetes.json packer/config/cni.json packer/config/containerd.json
@@ -39,6 +40,7 @@ AMI_BUILD_TARGETS := $(addprefix build-,$(AMI_BUILD_NAMES))
 GCE_BUILD_TARGETS := $(addprefix build-,$(GCE_BUILD_NAMES))
 OVA_BUILD_TARGETS_ESX := $(addprefix build-,$(OVA_BUILD_NAMES_ESX))
 AZURE_BUILD_TARGETS := $(addprefix build-,$(AZURE_BUILD_NAMES))
+SAKURACLOUD_BUILD_TARGETS := $(addprefix build-,$(SAKURACLOUD_BUILD_NAMES))
 
 $(OVA_BUILD_TARGETS):
 	packer build $(PACKER_FLAGS) -var-file="$(abspath packer/ova/$(subst build-,,$@).json)" packer/ova/packer.json
@@ -68,3 +70,7 @@ $(CLEAN_TARGETS):
 build: $(OVA_BUILD_TARGETS) $(AMI_BUILD_TARGETS) $(GCE_BUILD_TARGETS) $(AZURE_BUILD_TARGETS)
 clean: $(CLEAN_TARGETS)
 .PHONY: build clean
+
+$(SAKURACLOUD_BUILD_TARGETS):
+	packer build $(PACKER_FLAGS) -var-file="$(abspath packer/sakuracloud/default.json)" packer/sakuracloud/packer.json
+.PHONY: $(SAKURACLOUD_BUILD_TARGETS)
