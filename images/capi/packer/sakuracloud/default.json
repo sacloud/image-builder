@@ -1,5 +1,5 @@
 {
   "sakuracloud_access_token": "{{env `SAKURACLOUD_ACCESS_TOKEN`}}",
   "sakuracloud_access_secret": "{{env `SAKURACLOUD_ACCESS_TOKEN_SECRET`}}",
-  "sakuracloud_zone": "is1a"
+  "sakuracloud_zone": "{{env `SAKURACLOUD_ZONE`}}"
 }
